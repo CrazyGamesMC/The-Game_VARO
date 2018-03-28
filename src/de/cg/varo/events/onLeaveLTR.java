@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import de.cg.varo.game.Methods;
 import de.cg.varo.game.Var;
 import de.cg.varo.game.timer;
 
@@ -16,8 +17,10 @@ public class onLeaveLTR implements Listener{
 			timer.cancel(e.getPlayer());
 		
 		
-		e.setQuitMessage("§7Der Spieler " + e.getPlayer().getName() + " hat das Spiel verlassen!");
+		e.setQuitMessage("ï¿½7Der Spieler " + e.getPlayer().getName() + " hat das Spiel verlassen!");
 		
+		
+		Methods.putCoords(e.getPlayer());
 		
 	}
 	
