@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,9 +28,6 @@ public class strikeCMD implements CommandExecutor{
 		
 	}
 	
-	/*
-			This file is currently "work in progress"! Im gonna finish it soon!
-	*/
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -49,7 +47,7 @@ public class strikeCMD implements CommandExecutor{
 		
 		if (args.length == 2) {
 			
-			if (args[0].equalsIgnoreCase("add")) {
+			if (args[0].equalsIgnoreCase("add") && sender instanceof ConsoleCommandSender) {
 				
 				String name = args[1]; 
 				OfflinePlayer p2 = Bukkit.getServer().getOfflinePlayer(name);
@@ -64,20 +62,18 @@ public class strikeCMD implements CommandExecutor{
 				
 				if (Methods.getStrikes(p2.getPlayer()) == 1) {
 					
-					int x = p2.getPlayer().getLocation().getBlockX(); 
-					int y = p2.getPlayer().getLocation().getBlockY(); 
-					int z = p2.getPlayer().getLocation().getBlockZ(); 
+					int x = (int) Var.coords.getDouble(p2.getUniqueId().toString() + ".X");
+					int y = (int) Var.coords.getDouble(p2.getUniqueId().toString() + ".Y");
+					int z = (int) Var.coords.getDouble(p2.getUniqueId().toString() + ".Z");
 					
 					
 					System.out.println("Strike <-> Seine Coords: " + x + " / " + y + " / " + z);
 					
 				} else if (Methods.getStrikes(p2.getPlayer()) == 2) {
 					
-					p2.getPlayer().getInventory().clear(); 
-					p2.getPlayer().getInventory().setBoots(new ItemStack(Material.AIR));
-					p2.getPlayer().getInventory().setLeggings(new ItemStack(Material.AIR));
-					p2.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
-					p2.getPlayer().getInventory().setHelmet(new ItemStack(Material.AIR));
+					Var.cfg.set("toclear." + p2.getUniqueId().toString(), true);
+					
+					Methods.saveFile("cfg");
 					
 					System.out.println("Strike <-> Sein Inventar wurde geleert!");
 					
@@ -89,7 +85,7 @@ public class strikeCMD implements CommandExecutor{
 					
 					
 					List<String> aliveplayers = Var.cfg.getStringList("aliveplayers"); 
-					aliveplayers.remove(p2.getUniqueId());
+					aliveplayers.remove(p2.getUniqueId().toString());
 					Var.cfg.set("aliveplayers", aliveplayers);
 					Methods.saveFile("cfg");
 					
