@@ -17,6 +17,6 @@ commands:
      start:
           description: Start the game
      strike:
-          description: Start the game
+          description: Add a strike 
           aliases: [strikes]
       
