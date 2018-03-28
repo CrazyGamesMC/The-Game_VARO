@@ -1,0 +1,3 @@
+Patch 1.0.1: 
+  - Fixed Strike System
+  + Added UUID-System, to store a players UUID. Used for the Strike-System.
