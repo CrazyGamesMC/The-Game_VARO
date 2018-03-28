@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cg.varo.game.Methods;
+import de.cg.varo.game.UUIDManager;
 import de.cg.varo.game.Var;
 import de.cg.varo.game.timer;
 
@@ -15,7 +16,13 @@ public class onJoinLTR implements Listener{
 	@EventHandler() 
 	public void onJoin (PlayerJoinEvent e) {
 		
-		e.setJoinMessage(Var.prefix + "Der Spieler �b" + e.getPlayer().getName() + "�a hat den Server betreten!");
+		e.setJoinMessage(Var.prefix + "Der Spieler §b" + e.getPlayer().getName() + "§a hat den Server betreten!");
+		
+		if (!UUIDManager.isInitialized(e.getPlayer().getUniqueId().toString(), e.getPlayer())) {
+			
+			UUIDManager.initID(e.getPlayer().getUniqueId().toString(), e.getPlayer());
+			
+		}
 		
 		
 		if (Var.cfg.getBoolean("started") == true)  {
@@ -24,6 +31,8 @@ public class onJoinLTR implements Listener{
 			
 			Methods.putCoords(e.getPlayer());
 			
+			
+			//Clear players, if they have strikes
 			if (Methods.toClear(e.getPlayer())) {
 				
 				e.getPlayer().getInventory().clear(); 
