@@ -26,6 +26,8 @@ public class Var {
 	
 	static File coordsFile = new File("plugins//VARO//coords.yml"); 
 	
+	static File uuidFile = new File("plugins//VARO//uuids.yml"); 
+	
 	public static YamlConfiguration cfg = YamlConfiguration.loadConfiguration(config); 
 	
 	public static YamlConfiguration teams = YamlConfiguration.loadConfiguration(teamfile); 
@@ -37,6 +39,8 @@ public class Var {
 	public static YamlConfiguration strikes = YamlConfiguration.loadConfiguration(strikeFile); 
 	
 	public static YamlConfiguration coords = YamlConfiguration.loadConfiguration(coordsFile); 
+	
+	public static YamlConfiguration uuids = YamlConfiguration.loadConfiguration(uuidFile); 
 	
 	
 
@@ -169,10 +173,21 @@ public class Var {
 			
 		}
 		
+		if (!uuidFile.exists()) {
+			
+			try {
+				uuidFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+		}
+		
 		
 	}
 	
-	public static String prefix = "�7"+ cfg.getString("GameName") +"  ��a ";
+	public static String prefix = "§7"+ cfg.getString("GameName") +"  »§a ";
 	
 	
 	
