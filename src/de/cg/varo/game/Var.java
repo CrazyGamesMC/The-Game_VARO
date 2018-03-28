@@ -24,6 +24,7 @@ public class Var {
 	
 	static File strikeFile = new File ("plugins//VARO//strikes.yml");
 	
+	static File coordsFile = new File("plugins//VARO//coords.yml"); 
 	
 	public static YamlConfiguration cfg = YamlConfiguration.loadConfiguration(config); 
 	
@@ -34,6 +35,8 @@ public class Var {
 	public static YamlConfiguration defSpawn = YamlConfiguration.loadConfiguration(defaultSpawn); 
 	
 	public static YamlConfiguration strikes = YamlConfiguration.loadConfiguration(strikeFile); 
+	
+	public static YamlConfiguration coords = YamlConfiguration.loadConfiguration(coordsFile); 
 	
 	
 
@@ -153,12 +156,23 @@ public class Var {
 			} 
 			
 			
+		} 
+		
+		if (!coordsFile.exists()) {
+			
+			try {
+				coordsFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
 		}
 		
 		
 	}
 	
-	public static String prefix = "§7"+ cfg.getString("GameName") +"  »§a ";
+	public static String prefix = "ï¿½7"+ cfg.getString("GameName") +"  ï¿½ï¿½a ";
 	
 	
 	
