@@ -31,7 +31,7 @@ public class Methods {
 		}
 		
 		
-		 else if (id.equals("kills")) {
+		 	else if (id.equals("kills")) {
 				
 				try {
 					Var.kills.save(Var.killfile);
@@ -42,7 +42,7 @@ public class Methods {
 			}
 		 
 		 
-		 else if (id.equals("spawns")) {
+		 	else if (id.equals("spawns")) {
 				
 				try {
 					Var.defSpawn.save(Var.defaultSpawn);
@@ -66,6 +66,14 @@ public class Methods {
 					e.printStackTrace();
 				}
 				
+			}else if (id.equals("uuid")) {
+				
+				try {
+					Var.uuids.save(Var.uuidFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 			}else {
 				
 				System.out.println("Wrong parameters in Methods.saveFile()");
@@ -83,10 +91,10 @@ public class Methods {
 	
 	public static void showTeamInfo (Player p) {
 		
-		p.sendMessage("�7Teamname � �6" + Var.teams.getString("players." + p.getName() + ".team")); 
-		p.sendMessage("�7Mitglied 1 � �6" + Var.teams.getString("teams." + Var.teams.getString("players." + p.getName() + ".team") + ".Member1")); 
-		p.sendMessage("�7Mitglied 2 � �6" + Var.teams.getString("teams." + Var.teams.getString("players." + p.getName() + ".team") + ".Member2")); 
-		p.sendMessage("�7Kills � �6" + Var.kills.getString("teams." + Var.teams.getString("players." + p.getName() + ".team") + ".kills")); 
+		p.sendMessage("§7Teamname » §6" + Var.teams.getString("players." + p.getName() + ".team")); 
+		p.sendMessage("§7Mitglied 1 » §6" + Var.teams.getString("teams." + Var.teams.getString("players." + p.getName() + ".team") + ".Member1")); 
+		p.sendMessage("§7Mitglied 2 » §6" + Var.teams.getString("teams." + Var.teams.getString("players." + p.getName() + ".team") + ".Member2")); 
+		p.sendMessage("§7Kills » §6" + Var.kills.getString("teams." + Var.teams.getString("players." + p.getName() + ".team") + ".kills")); 
 	}
 	
 	
@@ -122,14 +130,14 @@ public class Methods {
 		try {
 				if (p2.isOnline() == false) {
 					
-					p.sendMessage(Var.prefix + "�cDer Teamleiter ist nicht online.");
+					p.sendMessage(Var.prefix + "§cDer Teamleiter ist nicht online.");
 					return; 
 					
 				}
 			
 			} catch (Exception e) {
 				
-				p.sendMessage(Var.prefix + "�cDer Teamleiter ist nicht online.");
+				p.sendMessage(Var.prefix + "§cDer Teamleiter ist nicht online.");
 				return; 
 				
 			}
@@ -138,7 +146,7 @@ public class Methods {
 		if (Var.teams.getBoolean("teams." + teamname + ".exists") == true) {
 			
 			Var.requesting.put(p.getName(), Var.teams.getString("teams." + teamname + ".Member1")); 
-			p2.sendMessage(Var.prefix + "Der Spieler �b" + p.getName() + "�a hat dir eine Teamanfrage gesendet. Nimm mit �b'/team accept " + p.getName() + "'�a an!");
+			p2.sendMessage(Var.prefix + "Der Spieler §b" + p.getName() + "§a hat dir eine Teamanfrage gesendet. Nimm mit §b'/team accept " + p.getName() + "'§a an!");
 			
 			
 			
@@ -147,7 +155,7 @@ public class Methods {
 			
 		} else {
 			
-			p.sendMessage(Var.prefix + "�cDas Team exestiert nicht.");
+			p.sendMessage(Var.prefix + "§cDas Team exestiert nicht.");
 			
 		}
 		
@@ -246,9 +254,9 @@ public class Methods {
 		
 	}
 	
-	public static int getStrikes(OfflinePlayer p) {
+	public static int getStrikes(String id) {
 		
-		int ret = Var.strikes.getInt("players." + p.getUniqueId().toString() + ".strikes");
+		int ret = Var.strikes.getInt("players." + id + ".strikes");
 		
 		
 		return ret; 
@@ -257,9 +265,9 @@ public class Methods {
 		
 	}
 	
-	public static void addStrikes(OfflinePlayer p, int ammount) {
+	public static void addStrikes(String id, int ammount) {
 		
-		Var.strikes.set("players." + p.getUniqueId().toString() + ".strikes" , Methods.getStrikes(p)+ammount); 
+		Var.strikes.set("players." + id + ".strikes" , Methods.getStrikes(id)+ammount); 
 		
 		
 		
