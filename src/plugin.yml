@@ -1,0 +1,22 @@
+name: VARO
+author: CG - John
+main: de.cg.varo.main.Main
+version: 1.0
+
+
+commands:
+     time:
+          description: Show your left time
+          aliases: [t]
+     team:
+          description: Team-Command
+          aliases: [teams]
+     setdefaultspawn:
+          description: Set the default spawn location for each Player
+          aliases: [teams]
+     start:
+          description: Start the game
+     strike:
+          description: Start the game
+          aliases: [strikes]
+      
