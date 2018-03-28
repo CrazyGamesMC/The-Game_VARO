@@ -44,27 +44,27 @@ public class startCMD implements CommandExecutor{
 					
 					if (Main.countdown == 30) {
 						
-						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in §b" + Main.countdown + " SEKUNDEN"); 
+						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in Â§b" + Main.countdown + " SEKUNDEN"); 
 						
 					} else if (Main.countdown == 25) {
 						
-						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in §b" + Main.countdown + " SEKUNDEN");
+						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in Â§b" + Main.countdown + " SEKUNDEN");
 						
 					} else if (Main.countdown == 20) {
 						
-						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in §b" + Main.countdown + " SEKUNDEN");
+						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in Â§b" + Main.countdown + " SEKUNDEN");
 						
 					} else if (Main.countdown == 15) {
 						
-						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in §b" + Main.countdown + " SEKUNDEN");
+						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in Â§b" + Main.countdown + " SEKUNDEN");
 						
 					} else if (Main.countdown == 10) {
 						
-						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in §b" + Main.countdown + " SEKUNDEN");
+						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in Â§b" + Main.countdown + " SEKUNDEN");
 						
 					} else if (Main.countdown <= 5 & Main.countdown != 0) {
 						
-						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in §b" + Main.countdown + " SEKUNDEN");
+						Bukkit.broadcastMessage(Var.prefix + "Das Spiel startet in Â§b" + Main.countdown + " SEKUNDEN");
 						
 					}
 					
@@ -88,6 +88,8 @@ public class startCMD implements CommandExecutor{
 						
 						List<String> playerlist = new ArrayList<String>(); 
 						
+						
+						//The game started - This effects the players now
 						for (Player p : Bukkit.getOnlinePlayers()) {
 							
 							p.setFoodLevel(20);
