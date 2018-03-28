@@ -1,8 +1,10 @@
 package de.cg.varo.events;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 import de.cg.varo.game.Methods;
 import de.cg.varo.game.Var;
@@ -13,12 +15,29 @@ public class onJoinLTR implements Listener{
 	@EventHandler() 
 	public void onJoin (PlayerJoinEvent e) {
 		
-		e.setJoinMessage(Var.prefix + "Der Spieler §b" + e.getPlayer().getName() + "§a hat den Server betreten!");
+		e.setJoinMessage(Var.prefix + "Der Spieler ï¿½b" + e.getPlayer().getName() + "ï¿½a hat den Server betreten!");
 		
 		
 		if (Var.cfg.getBoolean("started") == true)  {
 			
 			timer.start(e.getPlayer());
+			
+			Methods.putCoords(e.getPlayer());
+			
+			if (Methods.toClear(e.getPlayer())) {
+				
+				e.getPlayer().getInventory().clear(); 
+				
+				e.getPlayer().getInventory().setBoots(new ItemStack(Material.AIR));
+				e.getPlayer().getInventory().setLeggings(new ItemStack(Material.AIR));
+				e.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
+				e.getPlayer().getInventory().setHelmet(new ItemStack(Material.AIR));
+				
+				Var.cfg.set("toclear." + e.getPlayer().getUniqueId().toString(), false);
+				
+				Methods.saveFile("cfg");
+				
+			}
 			
 		} else {
 			
