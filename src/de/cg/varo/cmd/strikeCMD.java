@@ -27,6 +27,9 @@ public class strikeCMD implements CommandExecutor{
 		
 	}
 	
+	/*
+			This file is currently "work in progress"! Im gonna finish it soon!
+	*/
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
