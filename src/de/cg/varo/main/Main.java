@@ -14,6 +14,7 @@ import de.cg.varo.events.onJoinLTR;
 import de.cg.varo.events.onKillLTR;
 import de.cg.varo.events.onLeaveLTR;
 import de.cg.varo.events.onMoveLTR;
+import de.cg.varo.events.onPlayerInteractLTR;
 import de.cg.varo.game.Var;
 
 public class Main extends JavaPlugin{
@@ -53,6 +54,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new onFoodLevelLTR(), this);
 		getServer().getPluginManager().registerEvents(new onEntityDamageByEntityLTR(), this);
 		getServer().getPluginManager().registerEvents(new onLeaveLTR(), this);
+		getServer().getPluginManager().registerEvents(new onPlayerInteractLTR(), this);
 		
 	}
 	

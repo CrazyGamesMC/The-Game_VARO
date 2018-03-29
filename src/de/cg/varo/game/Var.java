@@ -28,6 +28,9 @@ public class Var {
 	
 	static File uuidFile = new File("plugins//VARO//uuids.yml"); 
 	
+	static File chestFile = new File("plugins//VARO//chests.yml"); 
+	
+	
 	public static YamlConfiguration cfg = YamlConfiguration.loadConfiguration(config); 
 	
 	public static YamlConfiguration teams = YamlConfiguration.loadConfiguration(teamfile); 
@@ -41,6 +44,8 @@ public class Var {
 	public static YamlConfiguration coords = YamlConfiguration.loadConfiguration(coordsFile); 
 	
 	public static YamlConfiguration uuids = YamlConfiguration.loadConfiguration(uuidFile); 
+	
+	public static YamlConfiguration chests = YamlConfiguration.loadConfiguration(chestFile); 
 	
 	
 
@@ -79,6 +84,8 @@ public class Var {
 				cfg.set("GameName", "Varo");
 				
 				cfg.set("enablePhases", true);
+				
+				cfg.set("useTGRules", true);
 				
 				cfg.set("Phasestate", 0);
 				
@@ -177,6 +184,17 @@ public class Var {
 			
 			try {
 				uuidFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+		}
+		
+		if (!chestFile.exists()) {
+			
+			try {
+				chestFile.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
