@@ -74,6 +74,14 @@ public class Methods {
 					e.printStackTrace();
 				}
 				
+			}else if (id.equals("chests")) {
+				
+				try {
+					Var.chests.save(Var.chestFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 			}else {
 				
 				System.out.println("Wrong parameters in Methods.saveFile()");
@@ -103,6 +111,8 @@ public class Methods {
 		Var.teams.set("teams." + name + ".Member1", p.getName());
 		Var.teams.set("teams." + name + ".Member2", "Nobody");
 		Var.teams.set("teams." + name + ".exists", true);
+		Var.teams.set("teams." + name + ".lockChest", true);
+		
 		Var.teams.set("players." + p.getName() + ".team" , name);
 		
 		
@@ -297,6 +307,77 @@ public class Methods {
 		Var.coords.set(p.getUniqueId().toString() + ".Z", z);
 		
 		Methods.saveFile("coords");
+	}
+	
+	public static boolean useRules() {
+		
+		return Var.cfg.getBoolean("useTGRules");
+		
+	}
+	
+	public static boolean chestIsLocked(Location loc, Player p) {
+		
+		boolean ret = false; 
+		
+		int x = loc.getBlockX(); 
+		int y = loc.getBlockY(); 
+		int z = loc.getBlockZ();
+		
+		for (String key : Var.chests.getConfigurationSection("chests").getKeys(false)) {
+			
+			int cx = Var.chests.getInt("chests." + key + ".X");
+			int cy = Var.chests.getInt("chests." + key + ".Y");
+			int cz = Var.chests.getInt("chests." + key + ".Z");
+			
+			System.out.println("x = " + x + "| y = " + y + "| z = " + z + "|| cx = " + cx + "| cy = " + cy + "| cz = " + cz);
+			
+			
+			if (x == cx && y == cy && z == cz) {
+				
+				String team = Var.chests.getString("chests." + key + ".team"); 
+				
+				System.out.println("DEBUG");
+				
+				if (Var.teams.getBoolean("teams." + team + ".lockChest") && !team.equals(Methods.getTeam(p))) {
+					
+					return true; 
+					
+				}
+				
+			}
+			
+		}
+		
+		
+		
+		return ret; 
+		
+		
+	}
+	
+	public static String getChestKey(Location loc) {
+		
+		int x = loc.getBlockX(); 
+		int y = loc.getBlockY(); 
+		int z = loc.getBlockZ();
+		
+		for (String key : Var.chests.getConfigurationSection("chests").getKeys(false)) {
+			
+			int cx = Var.chests.getInt("chests." + key + ".X");
+			int cy = Var.chests.getInt("chests." + key + ".Y");
+			int cz = Var.chests.getInt("chests." + key + ".Z");
+			
+			if (x == cx && y == cy && z == cz) {
+				
+				return key; 
+				
+			}
+			
+			
+		}
+		
+		return "UNLOCKED"; 
+		
 	}
 	
 	
