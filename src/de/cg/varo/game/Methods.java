@@ -1,12 +1,14 @@
 package de.cg.varo.game;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class Methods {
 
@@ -377,6 +379,76 @@ public class Methods {
 		}
 		
 		return "UNLOCKED"; 
+		
+	}
+	
+	public static void checkStrikes(String id, Player p) {
+		
+		
+		//Check if the player is registered!
+		if (!Var.uuids.getBoolean("IDs." + id + ".exists")) {
+			
+			System.out.println("Die ID dieses Spielers ist nicht registriert.");
+			
+			return;
+			
+		}
+		
+		System.out.println("Strike <-> Der Spieler erhielt nun einen weiteren Strike!");
+		
+		//EINEN STRIKE
+		if (Methods.getStrikes(id) == 1) {
+			
+			int x = (int) Var.coords.getDouble(id + ".X");
+			int y = (int) Var.coords.getDouble(id + ".Y");
+			int z = (int) Var.coords.getDouble(id + ".Z");
+			
+			
+			System.out.println("Strike <-> Seine Coords: " + x + " / " + y + " / " + z);
+			
+			Bukkit.broadcastMessage(Var.prefix + p.getName() + " erhielt einen Strike <-> Seine Coords: " + x + " / " + y + " / " + z);
+			
+		//ZWEI STRIKES
+		} else if (Methods.getStrikes(id) == 2) {
+			
+
+			int x = p.getLocation().getBlockX(); 
+			int y = p.getLocation().getBlockX(); 
+			int z = p.getLocation().getBlockX(); 
+			
+			
+			System.out.println("Strike <-> "+ p.getName() + "s Coords: " + x + " / " + y + " / " + z);
+			System.out.println("Strike <-> Sein Inventar wurde geleert!");
+			
+			p.getInventory().clear(); 
+			p.getInventory().setBoots(new ItemStack(Material.AIR));
+			p.getInventory().setLeggings(new ItemStack(Material.AIR));
+			p.getInventory().setChestplate(new ItemStack(Material.AIR));
+			p.getInventory().setHelmet(new ItemStack(Material.AIR));
+			
+			
+			Bukkit.broadcastMessage(Var.prefix + p.getName() + " erhielt einen Strike <-> Seine Coords: " + x + " / " + y + " / " + z);
+			Bukkit.broadcastMessage(Var.prefix + "Sein Inventar wurde geleert"); 
+			
+			
+		//DREI STRIKES
+		} else if (Methods.getStrikes(id) == 3) {
+			
+			p.kickPlayer("§cDu hast zu viele Strikes!\nDu bist disqualifiziet!");
+			p.setBanned(true);
+			
+			System.out.println("Strike <-> Der Spieler wurde gebannt!");
+			
+			
+			List<String> aliveplayers = Var.cfg.getStringList("aliveplayers"); 
+			aliveplayers.remove(p.getUniqueId().toString());
+			Var.cfg.set("aliveplayers", aliveplayers);
+			Methods.saveFile("cfg");
+			
+			
+			
+			
+		}
 		
 	}
 	
