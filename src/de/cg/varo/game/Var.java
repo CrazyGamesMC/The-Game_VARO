@@ -93,6 +93,8 @@ public class Var {
 				
 				cfg.set("time", 900);
 				
+				cfg.set("ended", false);
+				
 				
 				
 				
