@@ -28,16 +28,18 @@ public class onKillLTR implements Listener{
 		
 		if (p.getKiller() instanceof Player == false) {
 			
-			e.setDeathMessage(Var.prefix + "Der Spieler §b" + p.getName() + "§a ist gestorben!"); 
+			e.setDeathMessage(Var.prefix + "Der Spieler Â§b" + p.getName() + "Â§a ist gestorben!"); 
 			
 			if (Var.cfg.getBoolean("started") == true) {
 				
-				p.kickPlayer("§cDu bist ausgeschieden!"); 
-				p.setBanned(true);
+				p.kickPlayer("Â§cDu bist ausgeschieden!"); 
 				
 				
+					Methods.checkForWin(p);				
+					
 				
-			}
+				}
+			
 			
 			return; 
 		}
@@ -53,72 +55,16 @@ public class onKillLTR implements Listener{
 			Var.kills.set("teams." + Var.teams.getString("players." + p2.getName() + ".team") + ".kills"
 					, Var.kills.getInt("teams." + Var.teams.getString("players." + p2.getName() + ".team") + ".kills")+1) ;
 			
-			e.setDeathMessage(Var.prefix + "Der Spieler §b" + p.getName() + "§a wurde von Team §b#" + Var.teams.getString("players." + p2.getName() + ".team") + "§a getötet!");
-			Bukkit.broadcastMessage(Var.prefix + "Sie haben nun §b" + Var.kills.getInt("teams." + Var.teams.getString("players." + p2.getName() + ".team") + ".kills") + "§a Kills!");
+			e.setDeathMessage(Var.prefix + "Der Spieler Â§b" + p.getName() + "Â§a wurde von Team Â§b#" + Var.teams.getString("players." + p2.getName() + ".team") + "Â§a getÃ¶tet!");
+			Bukkit.broadcastMessage(Var.prefix + "Sie haben nun Â§b" + Var.kills.getInt("teams." + Var.teams.getString("players." + p2.getName() + ".team") + ".kills") + "Â§a Kills!");
 			
-			p.kickPlayer("§cDu bist ausgeschieden!"); 
+			p.kickPlayer("Â§cDu bist ausgeschieden!"); 
 			p.setBanned(true);
 			
 			if (e.getEntity() instanceof Player == false)
 				return; 
 			
-			List<String> aliveplayers = Var.cfg.getStringList("aliveplayers"); 
-			
-			if (aliveplayers.contains(p.getUniqueId().toString())) {
-				
-				aliveplayers.remove(p.getUniqueId().toString());
-				
-			}
-			
-			Var.cfg.set("aliveplayers", aliveplayers);	
-			
-			Methods.saveFile("cfg");
-			
-			if (aliveplayers.size() == 2) {
-				
-				UUID UUID1 = UUID.fromString(aliveplayers.get(1)); 
-				UUID UUID2 = UUID.fromString(aliveplayers.get(1)); 
-				
-				OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(UUID1); 
-				OfflinePlayer player2 = Bukkit.getServer().getOfflinePlayer(UUID2); 
-				
-				String team1 = Var.teams.getString("players." + player.getName() + ".team"); 
-				String team2 = Var.teams.getString("players." + player2.getName() + ".team"); 
-				
-				if (Var.teams.getString(team1).equals(team2)) {
-					
-					Bukkit.broadcastMessage(Var.prefix + "Das Team §b#" + team1 + "§a hat das Spiel gewonnen!");
-					
-					for (Player player3 : Bukkit.getOnlinePlayers()) {
-						
-						player3.playSound(player3.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 10);
-						timer.cancel(player3); 
-						
-					}
-					
-				}
-				
-				
-			}
-			
-			if (aliveplayers.size() == 1) {
-				
-				for (Player player3 : Bukkit.getOnlinePlayers()) {
-					
-					player3.playSound(player3.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 10);
-					
-					String team1 = Methods.getTeam(player3); 
-					
-					player3.sendMessage((Var.prefix + "Das Team §b#" + team1 + "§a hat das Spiel gewonnen!"));
-					
-					timer.cancel(player3); 
-					
-				}
-				
-				
-				
-			}
-			
+			Methods.checkForWin(p);		
 			
 			
 			if (Methods.isBattlePhase()) {
@@ -132,7 +78,7 @@ public class onKillLTR implements Listener{
 			
 		} else {
 			
-			e.setDeathMessage(Var.prefix + "Der Spieler §b" + p.getName() + "§a ist gestorben!");
+			e.setDeathMessage(Var.prefix + "Der Spieler Â§b" + p.getName() + "Â§a ist gestorben!");
 			
 		}
 		
