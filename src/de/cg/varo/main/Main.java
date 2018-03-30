@@ -9,10 +9,12 @@ import de.cg.varo.cmd.teamCMD;
 import de.cg.varo.cmd.timeCMD;
 import de.cg.varo.events.onBlockBreakLTR;
 import de.cg.varo.events.onEntityDamageByEntityLTR;
+import de.cg.varo.events.onEntityDamageLTR;
 import de.cg.varo.events.onFoodLevelLTR;
 import de.cg.varo.events.onJoinLTR;
 import de.cg.varo.events.onKillLTR;
 import de.cg.varo.events.onLeaveLTR;
+import de.cg.varo.events.onLoginLTR;
 import de.cg.varo.events.onMoveLTR;
 import de.cg.varo.events.onPlayerInteractLTR;
 import de.cg.varo.game.Var;
@@ -55,6 +57,8 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new onEntityDamageByEntityLTR(), this);
 		getServer().getPluginManager().registerEvents(new onLeaveLTR(), this);
 		getServer().getPluginManager().registerEvents(new onPlayerInteractLTR(), this);
+		getServer().getPluginManager().registerEvents(new onLoginLTR(), this);
+		getServer().getPluginManager().registerEvents(new onEntityDamageLTR(), this);
 		
 	}
 	
