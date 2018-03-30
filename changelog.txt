@@ -1,6 +1,7 @@
 Patch 1.1.0 (WorkInProgress):
   + Added Integration for The Game Rules
   + Added Teamchest-System
+  + Improved Game-System
 Patch 1.0.1: 
   - Fixed Strike System
   + Added UUID-System, to store a players UUID. Used for the Strike-System.
