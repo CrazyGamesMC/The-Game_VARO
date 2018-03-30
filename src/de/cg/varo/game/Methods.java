@@ -2,10 +2,12 @@ package de.cg.varo.game;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -338,7 +340,6 @@ public class Methods {
 				
 				String team = Var.chests.getString("chests." + key + ".team"); 
 				
-				System.out.println("DEBUG");
 				
 				if (Var.teams.getBoolean("teams." + team + ".lockChest") && !team.equals(Methods.getTeam(p))) {
 					
@@ -439,10 +440,8 @@ public class Methods {
 			
 			System.out.println("Strike <-> Der Spieler wurde gebannt!");
 			
+			Methods.checkForWin(p);		
 			
-			List<String> aliveplayers = Var.cfg.getStringList("aliveplayers"); 
-			aliveplayers.remove(p.getUniqueId().toString());
-			Var.cfg.set("aliveplayers", aliveplayers);
 			Methods.saveFile("cfg");
 			
 			
@@ -452,8 +451,78 @@ public class Methods {
 		
 	}
 	
-	
+	public static void checkForWin(Player p) {
+		
+		List<String> aliveplayers = Var.cfg.getStringList("aliveplayers"); 
+		
+		if (aliveplayers.contains(p.getUniqueId().toString())) {
+			
+			aliveplayers.remove(p.getUniqueId().toString());
+			
+		}
+		
+		Var.cfg.set("aliveplayers", aliveplayers);	
+		
+		Methods.saveFile("cfg");
+		
+		if (aliveplayers.size() == 2) {
+			
+			UUID UUID1 = UUID.fromString(aliveplayers.get(1)); 
+			UUID UUID2 = UUID.fromString(aliveplayers.get(1)); 
+			
+			OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(UUID1); 
+			OfflinePlayer player2 = Bukkit.getServer().getOfflinePlayer(UUID2); 
+			
+			String team1 = Var.teams.getString("players." + player.getName() + ".team"); 
+			String team2 = Var.teams.getString("players." + player2.getName() + ".team"); 
+			
+			if (Var.teams.getString(team1).equals(team2)) {
+				
+				Bukkit.broadcastMessage(Var.prefix + "Das Team §b#" + team1 + "§a hat das Spiel gewonnen!");
+				Var.cfg.set("ended", true);
+				Methods.saveFile("cfg");
+				
+				for (Player player3 : Bukkit.getOnlinePlayers()) {
+					
+					player3.playSound(player3.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 10);
+					timer.cancel(player3); 
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		if (aliveplayers.size() == 1) {
+			
+			Var.cfg.set("ended", true);
+			Methods.saveFile("cfg");
+			
+			
+			for (Player player3 : Bukkit.getOnlinePlayers()) {
+				
+				player3.playSound(player3.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 10);
+				
+				String team1 = Methods.getTeam(player3); 
+				
+				player3.sendMessage((Var.prefix + "Das Team §b#" + team1 + "§a hat das Spiel gewonnen!"));
+				
+				timer.cancel(player3); 
+				
+			}
 
+		
+	}
+	
+	
+	}
+	
+	public static boolean hasEnded() {
+		
+		return Var.cfg.getBoolean("ended");
+		
+	}
 	
 	
 }
